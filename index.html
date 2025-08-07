@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PresentSmart</title>
+  <style>
+    body {
+      background-color: #00b300;
+      font-family: 'Arial', cursive, sans-serif;
+      color: black;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #00b300;
+      border-radius: 10px;
+    }
+
+    .logo {
+      background-color: black;
+      color: #d7ff00;
+      text-align: center;
+      padding: 10px;
+      font-size: 32px;
+      font-weight: bold;
+      border-radius: 15px;
+      font-family: Impact, fantasy;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-size: 18px;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      background-color: #d7ff00;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      background-color: black;
+      color: #d7ff00;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="logo">PresentSmart</h1>
+
+    <label for="pendapatan">Pendapatan Kotor</label>
+    <input type="text" id="pendapatan" placeholder="Masukkan pendapatan" oninput="formatRupiah(this)" />
+
+    <label>Service 5%</label>
+    <input type="text" id="service" disabled />
+
+    <label>Oli 4%</label>
+    <input type="text" id="oli" disabled />
+
+    <label>Tabungan Dll 6%</label>
+    <input type="text" id="tabungan" disabled />
+
+    <label>Sisa (Pendapatan Bersih)</label>
+    <input type="text" id="sisa" disabled />
+
+    <button onclick="hitung()">Hitung</button>
+  </div>
+  
+  
+  
+     <label>made by : <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">@restuaapp</label>
+
+  <script>
+    function formatRupiah(input) {
+      let angka = input.value.replace(/[^0-9]/g, '');
+      let format = new Intl.NumberFormat('id-ID').format(angka);
+      input.value = 'Rp. ' + format;
+    }
+
+    function parseRupiah(rupiahString) {
+      return parseFloat(rupiahString.replace(/[^0-9]/g, '')) || 0;
+    }
+
+    function formatToRupiah(number) {
+      return 'Rp. ' + new Intl.NumberFormat('id-ID').format(number.toFixed(0));
+    }
+
+    function hitung() {
+      const pendapatanRaw = document.getElementById("pendapatan").value;
+      const pendapatan = parseRupiah(pendapatanRaw);
+
+      if (pendapatan === 0) {
+        alert("Masukkan angka yang valid!");
+        return;
+      }
+
+      const service = pendapatan * 0.05;
+      const oli = pendapatan * 0.04;
+      const tabungan = pendapatan * 0.06;
+      const sisa = pendapatan - service - oli - tabungan;
+
+      document.getElementById("service").value = formatToRupiah(service);
+      document.getElementById("oli").value = formatToRupiah(oli);
+      document.getElementById("tabungan").value = formatToRupiah(tabungan);
+      document.getElementById("sisa").value = formatToRupiah(sisa);
+    }
+  </script>
+</body>
+</html>
